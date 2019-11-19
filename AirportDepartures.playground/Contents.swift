@@ -60,7 +60,15 @@ class DepartureBoard {
 //: d. Make one of the flights have a `nil` terminal because it has not been decided yet.
 //:
 //: e. Stretch: Look at the API for [`DateComponents`](https://developer.apple.com/documentation/foundation/datecomponents?language=objc) for creating a specific time
+var flight1 = Flight(destination: Airport(city: "Los Angeles", acronym: "LAX"), airline: "United", flight: "LA 321", departureTime: Date(), terminal: "3", status: FlightStatus.onTime)
+var flight2 = Flight(destination: Airport(city: "Charlotte", acronym: "QEN"), airline: "AA", flight: "CH 213", departureTime: nil, terminal: "4", status: FlightStatus.canceled)
+var flight3 = Flight(destination: Airport(city: "Boston", acronym: "BST"), airline: "JetBlue", flight: "BT 312", departureTime: Date(), terminal: nil, status: FlightStatus.delayed)
 
+let board = DepartureBoard(city: "New York City", acronym: "NYC")
+
+board.departures.append(flight1)
+board.departures.append(flight2)
+board.departures.append(flight3)
 
 
 //: ## 3. Create a free-standing function that can print the flight information from the `DepartureBoard`
@@ -71,9 +79,16 @@ class DepartureBoard {
 //: c. Make your `FlightStatus` enum conform to `String` so you can print the `rawValue` String values from the `enum`. See the [enum documentation](https://docs.swift.org/swift-book/LanguageGuide/Enumerations.html).
 //:
 //: d. Print out the current DepartureBoard you created using the function
+func printFlights(_ departureBoard: DepartureBoard) {
+    
+    for flight in departureBoard.departures {
+        
+        print(flight.flight + " " + flight.destination.city + " " + flight.status.rawValue)
+        
+    }
+}
 
-
-
+printFlights(board)
 
 //: ## 4. Make a second function to print print an empty string if the `departureTime` is nil
 //: a. Createa new `printDepartures2(departureBoard:)` or modify the previous function
