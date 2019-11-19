@@ -82,9 +82,7 @@ board.departures.append(flight3)
 func printFlights(_ departureBoard: DepartureBoard) {
     
     for flight in departureBoard.departures {
-        
-        print(flight.flight + " " + flight.destination.city + " " + flight.status.rawValue)
-        
+        print("Destination: \(flight.destination.city) Airline: \(flight.airline) Flight: \(flight.flight) Departure Time: \(flight.departureTime) Terminal: \(flight.terminal) Status: \(flight.status.rawValue)")
     }
 }
 
@@ -104,8 +102,36 @@ printFlights(board)
 //:     Destination: Los Angeles Airline: Delta Air Lines Flight: KL 6966 Departure Time:  Terminal: 4 Status: Canceled
 //:     Destination: Rochester Airline: Jet Blue Airways Flight: B6 586 Departure Time: 1:26 PM Terminal:  Status: Scheduled
 //:     Destination: Boston Airline: KLM Flight: KL 6966 Departure Time: 1:26 PM Terminal: 4 Status: Scheduled
+func printDepartures2(departureBoard: DepartureBoard) {
+    for flight in departureBoard.departures {
+        
+        var departureString: String = ""
+        
+        if let departureTime = flight.departureTime {
+            
+            departureString = "\(departureTime)"
+            
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateStyle = .none
+            dateFormatter.timeStyle = .short
+            departureString = "\(dateFormatter.string(from: departureTime))"
+            
+        }
+        
+        var terminalString: String = ""
+        
+        if let terminal = flight.terminal {
+            
+            terminalString = terminal
+            
+        }
+        
+        print("Destination: \(flight.destination.city) Airline: \(flight.airline) Flight: \(flight.flight) Departure Time: \(departureString) Terminal: \(terminalString) Status: \(flight.status.rawValue)")
+    }
+}
 
 
+printDepartures2(departureBoard: board)
 
 //: ## 5. Add an instance method to your `DepatureBoard` class (above) that can send an alert message to all passengers about their upcoming flight. Loop through the flights and use a `switch` on the flight status variable.
 //: a. If the flight is canceled print out: "We're sorry your flight to \(city) was canceled, here is a $500 voucher"
@@ -143,5 +169,9 @@ printFlights(board)
 //:
 //: f. Stretch: Use a [`NumberFormatter`](https://developer.apple.com/documentation/foundation/numberformatter) with the `currencyStyle` to format the amount in US dollars.
 
+func calculateAirfare(checkedBags: Int, distance: Int, travelers: Int) -> Double {
+    let total = (Double(checkedBags) * 25 + Double(distance) * 0.1) * Double(travelers)
+    return total
+}
 
-
+print(calculateAirfare(checkedBags: 2, distance: 2000, travelers: 3))
